@@ -3,6 +3,7 @@
 
 require 'sinatra'
 require 'uri'
+require 'json'
 
 BASE_URL = 'http://lmgtfy.com/?q='
 
@@ -18,6 +19,9 @@ get '/search/' do
 	authenticated_with_token!
 	search_text = URI.escape( params['text'] )
 	url = BASE_URL + "#{search_text}"
-	return url
+	return {
+		'text': url,
+		'response_type': 'in_channel'
+	}.to_json
 end
 
